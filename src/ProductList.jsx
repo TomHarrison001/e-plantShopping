@@ -6,6 +6,21 @@ function ProductList({ onHomeClick }) {
     const [showCart, setShowCart] = useState(false);
     const [showPlants, setShowPlants] = useState(false); // State to control the visibility of the About Us page
     const [addedToCart, setAddedToCart] = useState({});
+    const CartItems = useSelector(state => state.cart.items);
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        const cartItemNames = CartItems.map(item => item.name);
+        setAddedToCart(() => {
+            const newState = {};
+
+            cartItemNames.forEach(name => {
+                newState[name] = true;
+            });
+            return newState;
+        });
+    }, [CartItems]);
+
     const plantsArray = [
         {
             category: "Air Purifying Plants",
@@ -232,6 +247,10 @@ function ProductList({ onHomeClick }) {
         color: 'white',
         fontSize: '30px',
         textDecoration: 'none',
+    }
+
+    const calculateTotalQuantity = () => {
+        return CartItems ? CartItems.reduce((total, item) => total + item.quantity, 0): 0;
     }
 
     const handleHomeClick = (e) => {
