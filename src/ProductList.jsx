@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import './ProductList.css'
 import { addItem } from './CartSlice'
 import CartItem from './CartItem';
@@ -250,7 +251,7 @@ function ProductList({ onHomeClick }) {
     }
 
     const calculateTotalQuantity = () => {
-        return CartItems ? CartItems.reduce((total, item) => total + item.quantity, 0): 0;
+        return CartItems ? CartItems.reduce((total, item) => total + item.quantity, 0) : 0;
     }
 
     const handleHomeClick = (e) => {
